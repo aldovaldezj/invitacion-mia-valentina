@@ -71,7 +71,7 @@
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
 
-    /* Canvas para la suave lluvia de pétalos */
+    /* Canvas para la lluvia de pétalos y destellos mágicos interactivos */
     #petals-canvas {
       position: absolute;
       top: 0;
@@ -79,10 +79,10 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 10;
     }
 
-    /* Bordes florales que tocan los extremos de pantalla */
+    /* Bordes florales en los extremos de pantalla */
     .floral-border-top,
     .floral-border-bottom {
       position: absolute;
@@ -105,6 +105,92 @@
     .floral-border-bottom {
       bottom: 0;
       height: clamp(75px, 11vh, 110px);
+    }
+
+    /* ================= BOTÓN DE ACCESIBILIDAD PARA ADULTOS MAYORES ================= */
+    .btn-font-toggle {
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top, 14px));
+      right: max(14px, env(safe-area-inset-right, 14px));
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid #E2CEBE;
+      border-radius: 20px;
+      color: #8A5A44;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(138, 90, 68, 0.12);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-font-toggle:hover {
+      background: #FFFDF9;
+      border-color: #8A5A44;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(138, 90, 68, 0.20);
+    }
+
+    .btn-font-toggle:active {
+      transform: scale(0.96);
+    }
+
+    .btn-font-toggle.active {
+      background: #F3E4D7;
+      border-color: #8A5A44;
+      color: #633B26;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 2px 6px rgba(138, 90, 68, 0.15);
+    }
+
+    .btn-font-toggle .font-icon {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* Ajustes visuales de gran legibilidad para Adultos Mayores */
+    body.large-text-mode .text-date {
+      font-size: 39px !important;
+      font-weight: 700 !important;
+      fill: #8F6649 !important;
+    }
+    body.large-text-mode .text-parents-label {
+      font-size: 25px !important;
+      font-weight: 800 !important;
+    }
+    body.large-text-mode .text-parents-names {
+      font-size: 32px !important;
+      font-weight: 800 !important;
+      fill: #E27998 !important;
+    }
+    body.large-text-mode .map-venue {
+      font-size: 29px !important;
+      font-weight: 900 !important;
+      fill: #8A5A44 !important;
+    }
+    body.large-text-mode .text-address-line {
+      font-size: 27px !important;
+      font-weight: 700 !important;
+      fill: #8A684E !important;
+    }
+    body.large-text-mode .text-te-esperamos {
+      font-size: 44px !important;
+      font-weight: 900 !important;
+      fill: #E8688F !important;
+    }
+    body.large-text-mode .map-link-rect {
+      stroke: #EDA7BE;
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
     }
 
     /* Contenedor responsivo */
@@ -154,7 +240,7 @@
       overflow: visible;
     }
 
-    /* Tipografías */
+    /* Tipografías base */
     .svg-serif-regular {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-weight: 500;
@@ -177,6 +263,49 @@
       font-weight: 400;
     }
 
+    /* ================= ENLACE A GOOGLE MAPS ================= */
+    .map-link {
+      cursor: pointer;
+      text-decoration: none;
+      -webkit-tap-highlight-color: rgba(238, 163, 188, 0.2);
+    }
+
+    .map-link-rect {
+      fill: transparent;
+      transition: fill 0.25s ease, stroke 0.25s ease;
+      rx: 14;
+    }
+
+    .map-link:hover .map-link-rect,
+    .map-link:focus-visible .map-link-rect {
+      fill: rgba(238, 163, 188, 0.10);
+      stroke: #EDA7BE;
+      stroke-width: 1.5;
+    }
+
+    .map-link:hover .map-venue,
+    .map-link:focus-visible .map-venue {
+      fill: #8A5A44;
+    }
+
+    .map-hint {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      transition: opacity 0.25s ease;
+    }
+
+    @keyframes pulseHint {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    .anim-map-hint {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: pulseHint 2.8s ease-in-out infinite;
+    }
+
     @media (min-width: 601px) {
       .invitation-container {
         max-width: 540px;
@@ -184,7 +313,7 @@
       }
     }
 
-    /* ================= ANIMACIONES DELICADAS Y FLUIDAS ================= */
+    /* ================= ANIMACIONES DELICADAS Y TERNURA ================= */
 
     /* 1. Aleteo y flotación de Mariposas */
     @keyframes butterflyFloat1 {
@@ -320,7 +449,77 @@
       animation: tiggerWiggle 4.6s ease-in-out infinite;
     }
 
-    /* 5. Revelación suave inicial */
+    /* 5. Pooh con vestido: Vaivén sutil */
+    @keyframes poohDressSway {
+      0%, 100% {
+        transform: rotate(0deg) translateY(0);
+      }
+      35% {
+        transform: rotate(1.5deg) translateY(-2px);
+      }
+      70% {
+        transform: rotate(-1.2deg) translateY(-1px);
+      }
+    }
+
+    .anim-pooh-dress {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: poohDressSway 5.2s ease-in-out infinite;
+    }
+
+    /* 6. Igor: Respiración tierna */
+    @keyframes igorBreathe {
+      0%, 100% {
+        transform: scale(1) translateY(0);
+      }
+      50% {
+        transform: scale(1.02, 0.985) translateY(1px);
+      }
+    }
+
+    .anim-igor {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: igorBreathe 4.2s ease-in-out infinite;
+    }
+
+    /* 7. Piglet y Pooh: Dulce acunamiento */
+    @keyframes pigletCuddle {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-3.5px) rotate(1.2deg);
+      }
+    }
+
+    .anim-piglet-pooh {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: pigletCuddle 4.6s ease-in-out infinite;
+    }
+
+    /* 8. Pooh con corona: Balanceo y destello de coronita */
+    @keyframes poohCrownGlow {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      40% {
+        transform: translateY(-3px) rotate(-1.5deg);
+      }
+      75% {
+        transform: translateY(-1px) rotate(1deg);
+      }
+    }
+
+    .anim-pooh-crown {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: poohCrownGlow 4.8s ease-in-out infinite 0.6s;
+    }
+
+    /* Revelación suave inicial */
     @keyframes fadeInContent {
       from {
         opacity: 0;
@@ -345,7 +544,13 @@
 </head>
 <body>
   <div class="page-wrapper">
-    <!-- Capa de pétalos flotantes -->
+    <!-- Botón Accesible Tamaño de Letra (Adultos Mayores) -->
+    <button class="btn-font-toggle" id="fontToggleBtn" aria-label="Aumentar tamaño de letra para facilitar lectura" title="Cambiar tamaño de texto">
+      <span class="font-icon" aria-hidden="true">Aa</span>
+      <span id="fontToggleText">Más grande</span>
+    </button>
+
+    <!-- Capa de pétalos flotantes y destellos mágicos -->
     <canvas id="petals-canvas" aria-hidden="true"></canvas>
 
     <!-- Bordes florales que tocan los extremos reales de la pantalla -->
@@ -407,8 +612,21 @@
       <!-- SECCIÓN 2: CUERPO DE LA INVITACIÓN -->
       <section class="sec-middle">
         <svg class="sec-svg" viewBox="0 0 900 790" preserveAspectRatio="xMidYMid meet">
-          <!-- Fecha y horario -->
-          <text x="450" y="30" text-anchor="middle" class="svg-serif-regular" font-size="34" fill="#AE957F" letter-spacing="0.6" textLength="550" lengthAdjust="spacingAndGlyphs">Sabado | 9 de Enero | 3:00 a 6:00 pm</text>
+          <defs>
+            <!-- Shimmer / Brillo aperlado sobre Mia Valentina -->
+            <linearGradient id="miaShimmerGrad" x1="-100%" y1="0%" x2="200%" y2="0%">
+              <stop offset="0%" stop-color="#EEA3BC" />
+              <stop offset="30%" stop-color="#EEA3BC" />
+              <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.95" />
+              <stop offset="70%" stop-color="#EEA3BC" />
+              <stop offset="100%" stop-color="#EEA3BC" />
+              <animate attributeName="x1" from="-100%" to="100%" dur="4.5s" repeatCount="indefinite" begin="1s" />
+              <animate attributeName="x2" from="0%" to="200%" dur="4.5s" repeatCount="indefinite" begin="1s" />
+            </linearGradient>
+          </defs>
+
+          <!-- Fecha y horario con clase escalable -->
+          <text x="450" y="30" text-anchor="middle" class="svg-serif-regular text-date" font-size="34" fill="#AE957F" letter-spacing="0.6">Sabado | 9 de Enero | 3:00 a 6:00 pm</text>
 
           <!-- TE INVITO A CELEBRAR EL -->
           <text x="450" y="100" text-anchor="middle" class="svg-serif-regular" font-size="31" fill="#AE957F" letter-spacing="1.2" textLength="420" lengthAdjust="spacingAndGlyphs">TE INVITO A CELEBRAR EL</text>
@@ -427,12 +645,14 @@
             <image href="img/mariposa-rosa-claro.png" x="725" y="135" width="86" height="105" transform="rotate(-4 768 187)" />
           </g>
 
-          <!-- MIA VALENTINA: Nombre en tamaño medio ideal (86px), destacado y enmarcado -->
-          <text x="450" y="278" text-anchor="middle" class="svg-script-name" font-size="86" fill="#EEA3BC">Mia Valentina</text>
+          <!-- MIA VALENTINA con Shimmer aperlado sutil -->
+          <text x="450" y="278" text-anchor="middle" class="svg-script-name" font-size="86" fill="url(#miaShimmerGrad)">Mia Valentina</text>
 
-          <!-- Pooh con vestido rosa -->
-          <image href="img/pooh-vestido.png" x="25" y="325" width="195" height="275" />
-          <image href="img/flor-rosa.png" x="171" y="325" width="48" height="46" />
+          <!-- Pooh con vestido animado suavemente -->
+          <g class="anim-pooh-dress">
+            <image href="img/pooh-vestido.png" x="25" y="325" width="195" height="275" />
+            <image href="img/flor-rosa.png" x="171" y="325" width="48" height="46" />
+          </g>
 
           <!-- Corazón huella con latido suave y mariposa -->
           <g class="anim-heart">
@@ -444,57 +664,97 @@
             <image href="img/abeja.png" x="769" y="480" width="46" height="41" />
           </g>
 
-          <!-- LOS PADRES SON (Nombres un poco más grandes) -->
-          <text x="450" y="478" text-anchor="middle" class="svg-serif-bold" font-size="22" fill="#EDA7BE" textLength="202" lengthAdjust="spacingAndGlyphs">LOS PADRES SON:</text>
-          <text x="450" y="506" text-anchor="middle" class="svg-serif-bold" font-size="27" fill="#EDA7BE" letter-spacing="0.8">Karen Cantu &amp; Aldo Valdez</text>
+          <!-- LOS PADRES SON (Clases escalables para adultos mayores) -->
+          <text x="450" y="478" text-anchor="middle" class="svg-serif-bold text-parents-label" font-size="22" fill="#EDA7BE" textLength="202" lengthAdjust="spacingAndGlyphs">LOS PADRES SON:</text>
+          <text x="450" y="506" text-anchor="middle" class="svg-serif-bold text-parents-names" font-size="27" fill="#EDA7BE" letter-spacing="0.8">Karen Cantu &amp; Aldo Valdez</text>
 
-          <!-- DIRECCIÓN -->
-          <line x1="330" y1="550" x2="395" y2="550" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
-          <text x="450" y="557" text-anchor="middle" class="svg-serif-semibold" font-size="23" fill="#B49D88" letter-spacing="3">DIRECCIÓN</text>
-          <line x1="505" y1="550" x2="570" y2="550" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
+          <!-- DIRECCIÓN: Enlace interactivo a Google Maps -->
+          <a href="https://www.google.com/maps/search/?api=1&query=PRINCESS+PINK+EVENTOS+Plaza+Antalya+Guadalupe+NL" target="_blank" rel="noopener noreferrer" class="map-link" aria-label="Abrir ubicación en Google Maps (nueva pestaña)">
+            <!-- Área táctil amplia y cómoda -->
+            <rect x="180" y="540" width="540" height="175" class="map-link-rect" />
 
-          <text x="450" y="588" text-anchor="middle" class="svg-serif-bold" font-size="25" fill="#AE876C" letter-spacing="1.2">PRINCESS PINK EVENTOS</text>
-          <text x="450" y="616" text-anchor="middle" class="svg-serif-semibold" font-size="24" fill="#A68B74">Plaza Antalya · Local 201, Segundo piso</text>
-          <text x="450" y="642" text-anchor="middle" class="svg-serif-regular" font-size="23" fill="#AE957F">Miguel Alemán #6063, casi esq. Las Américas</text>
-          <text x="450" y="668" text-anchor="middle" class="svg-serif-italic" font-size="23" fill="#AE957F">Col. América - Linda Vista, Guadalupe, N.L.</text>
+            <line x1="330" y1="550" x2="395" y2="550" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
+            <text x="450" y="557" text-anchor="middle" class="svg-serif-semibold" font-size="23" fill="#B49D88" letter-spacing="3">DIRECCIÓN</text>
+            <line x1="505" y1="550" x2="570" y2="550" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
+
+            <text x="450" y="588" text-anchor="middle" class="svg-serif-bold map-venue" font-size="25" fill="#AE876C" letter-spacing="1.2">PRINCESS PINK EVENTOS 📍</text>
+            <text x="450" y="616" text-anchor="middle" class="svg-serif-semibold text-address-line" font-size="24" fill="#A68B74">Plaza Antalya · Local 201, Segundo piso</text>
+            <text x="450" y="642" text-anchor="middle" class="svg-serif-regular text-address-line" font-size="23" fill="#AE957F">Miguel Alemán #6063, casi esq. Las Américas</text>
+            <text x="450" y="668" text-anchor="middle" class="svg-serif-italic text-address-line" font-size="23" fill="#AE957F">Col. América - Linda Vista, Guadalupe, N.L.</text>
+
+            <!-- Indicador sutil para tocar -->
+            <g class="anim-map-hint">
+              <text x="450" y="698" text-anchor="middle" class="map-hint" font-size="19" fill="#B88A6E">✦ Toca aquí para ver cómo llegar ✦</text>
+            </g>
+          </a>
 
           <!-- "Te esperamos" -->
-          <text x="450" y="740" text-anchor="middle" class="svg-serif-bold" font-size="40" fill="#F293B1" textLength="270" lengthAdjust="spacingAndGlyphs">Te esperamos</text>
+          <text x="450" y="750" text-anchor="middle" class="svg-serif-bold text-te-esperamos" font-size="40" fill="#F293B1" textLength="270" lengthAdjust="spacingAndGlyphs">Te esperamos</text>
         </svg>
       </section>
 
       <!-- SECCIÓN 3: PIE DE PÁGINA (Personajes en el jardín) -->
       <footer class="sec-footer">
         <svg class="sec-svg" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet">
-          <!-- Igor (eeyore) -->
-          <g class="anim-butterfly-3">
-            <image href="img/mariposa-rosa-fuerte.png" x="33" y="10" width="58" height="94" transform="rotate(5 62 57)" />
+          <!-- Igor animado tiernamente -->
+          <g class="anim-igor">
+            <g class="anim-butterfly-3">
+              <image href="img/mariposa-rosa-fuerte.png" x="33" y="10" width="58" height="94" transform="rotate(5 62 57)" />
+            </g>
+            <image href="img/igor.png" x="50" y="45" width="194" height="194" />
+            <image href="img/flor-rosa.png" x="90" y="95" width="59" height="56" />
           </g>
-          <image href="img/igor.png" x="50" y="45" width="194" height="194" />
-          <image href="img/flor-rosa.png" x="90" y="95" width="59" height="56" />
 
-          <!-- Piglet y Pooh -->
-          <image href="img/flor-rosa.png" x="273" y="95" width="76" height="73" />
-          <image href="img/piglet-y-pooh.png" x="295" y="105" width="179" height="173" />
-
-          <!-- Pooh corona -->
-          <image href="img/flor-rosa.png" x="735" y="20" width="94" height="90" />
-          <g class="anim-butterfly-1">
-            <image href="img/mariposa-rosa-fuerte.png" x="690" y="65" width="74" height="120" transform="rotate(10 727 125)" />
+          <!-- Piglet y Pooh acunándose -->
+          <g class="anim-piglet-pooh">
+            <image href="img/flor-rosa.png" x="273" y="95" width="76" height="73" />
+            <image href="img/piglet-y-pooh.png" x="295" y="105" width="179" height="173" />
           </g>
-          <image href="img/pooh-corona.png" x="745" y="75" width="114" height="180" />
+
+          <!-- Pooh corona balanceándose -->
+          <g class="anim-pooh-crown">
+            <image href="img/flor-rosa.png" x="735" y="20" width="94" height="90" />
+            <g class="anim-butterfly-1">
+              <image href="img/mariposa-rosa-fuerte.png" x="690" y="65" width="74" height="120" transform="rotate(10 727 125)" />
+            </g>
+            <image href="img/pooh-corona.png" x="745" y="75" width="114" height="180" />
+          </g>
         </svg>
       </footer>
     </main>
   </div>
 
-  <!-- Script ligero y optimizado para la suave caída de pétalos de acuarela -->
   <script>
+    // 1. Botón de accesibilidad: Aumento de tamaño de letra para adultos mayores
+    (function() {
+      const btn = document.getElementById('fontToggleBtn');
+      const text = document.getElementById('fontToggleText');
+      if (!btn) return;
+
+      let isLarge = false;
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isLarge = !isLarge;
+        if (isLarge) {
+          document.body.classList.add('large-text-mode');
+          btn.classList.add('active');
+          text.textContent = 'Normal';
+          btn.setAttribute('aria-label', 'Restablecer tamaño normal');
+        } else {
+          document.body.classList.remove('large-text-mode');
+          btn.classList.remove('active');
+          text.textContent = 'Más grande';
+          btn.setAttribute('aria-label', 'Aumentar tamaño de letra para facilitar lectura');
+        }
+      });
+    })();
+
+    // 2. Lluvia de pétalos + Destellos mágicos al tocar la pantalla
     (function() {
       const canvas = document.getElementById('petals-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      let w, h, animationId;
+      let w, h;
 
       function resize() {
         w = canvas.width = window.innerWidth;
@@ -511,7 +771,7 @@
         'rgba(255, 214, 224, 0.50)'
       ];
 
-      const petalCount = Math.min(22, Math.max(12, Math.floor(window.innerWidth / 30)));
+      const petalCount = Math.min(20, Math.max(12, Math.floor(window.innerWidth / 30)));
       const petals = [];
 
       for (let i = 0; i < petalCount; i++) {
@@ -530,13 +790,56 @@
         });
       }
 
+      // Destellos mágicos interactivos
+      const sparkles = [];
+      const sparkleColors = ['#FFE89E', '#FFDF78', '#FFF4CC', '#F7BACD', '#FFFFFF'];
+
+      function addSparkles(x, y) {
+        const count = 9;
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1.2 + Math.random() * 2.8;
+          sparkles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 1.2,
+            size: 3 + Math.random() * 4,
+            color: sparkleColors[Math.floor(Math.random() * sparkleColors.length)],
+            alpha: 1,
+            decay: 0.022 + Math.random() * 0.015,
+            rotation: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.1
+          });
+        }
+      }
+
+      window.addEventListener('pointerdown', function(e) {
+        addSparkles(e.clientX, e.clientY);
+      }, { passive: true });
+
+      function drawStar(x, y, r, color, alpha, rot) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+          ctx.lineTo(Math.cos((i * 90) * Math.PI / 180) * r, Math.sin((i * 90) * Math.PI / 180) * r);
+          ctx.lineTo(Math.cos((i * 90 + 45) * Math.PI / 180) * (r * 0.3), Math.sin((i * 90 + 45) * Math.PI / 180) * (r * 0.3));
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
       function drawPetal(p) {
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(p.angle);
         ctx.fillStyle = p.color;
 
-        // Dibujar forma de pétalo orgánico con curvas Bézier
         ctx.beginPath();
         ctx.moveTo(0, -p.size);
         ctx.bezierCurveTo(p.size * 0.8, -p.size * 0.6, p.size * 0.8, p.size * 0.6, 0, p.size);
@@ -550,13 +853,13 @@
         ctx.clearRect(0, 0, w, h);
         tick++;
 
+        // Pétalos de acuarela
         for (let i = 0; i < petals.length; i++) {
           const p = petals[i];
           p.y += p.speedY;
           p.x += p.speedX + Math.sin(tick * p.oscillationSpeed) * 0.5;
           p.angle += p.angularSpeed;
 
-          // Si sale por abajo, reaparece suavemente arriba
           if (p.y > h + 20) {
             p.y = -20;
             p.x = Math.random() * w;
@@ -567,10 +870,25 @@
           drawPetal(p);
         }
 
-        animationId = requestAnimationFrame(animate);
+        // Destellos dorados al toque
+        for (let i = sparkles.length - 1; i >= 0; i--) {
+          const s = sparkles[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.vy += 0.04;
+          s.alpha -= s.decay;
+          s.rotation += s.rotSpeed;
+
+          if (s.alpha <= 0) {
+            sparkles.splice(i, 1);
+          } else {
+            drawStar(s.x, s.y, s.size, s.color, s.alpha, s.rotation);
+          }
+        }
+
+        requestAnimationFrame(animate);
       }
 
-      // Iniciar animación si no hay preferencia de movimiento reducido
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         animate();
       }
