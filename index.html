@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Invitación Baby Shower - Mia Valentina Valdez Cantú</title>
   <meta name="description" content="Te invito a celebrar el Baby Shower de Mia Valentina Valdez Cantú. Sábado 9 de Enero de 3:00 a 6:00 pm en Princess Pink Eventos, Guadalupe N.L.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,18 +30,18 @@
     html, body {
       width: 100%;
       height: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
       background-color: var(--bg-cream);
       overflow-x: hidden;
       -webkit-text-size-adjust: 100%;
     }
 
-    /* Accesibilidad: foco visible para navegación por teclado */
     :focus-visible {
       outline: 3px solid var(--brand-focus);
       outline-offset: 4px;
     }
 
-    /* Utilidad accesible solo para lectores de pantalla (WCAG 2.1 AA) */
     .sr-only {
       position: absolute;
       width: 1px;
@@ -54,39 +54,28 @@
       border: 0;
     }
 
-    /* Contenedor general responsivo sin necesidad de scroll vertical */
+    /* Envoltura general a pantalla completa sin franjas arriba ni abajo */
     .page-wrapper {
       position: relative;
       width: 100%;
+      height: 100%;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
       background-color: var(--bg-cream);
       overflow: hidden;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
 
-    /* Lienzo con proporción más amplia (1160 / 1600 = 0.725):
-       - Es ~160-200px más ancho en navegador sin perder su proporción fija
-       - Comparte exactamente la misma cuadrícula 1160x1600 con el SVG de textos,
-         por lo que los ramos, el nombre de Mia, Pooh y el corazón con su mariposa
-         jamás se separan entre sí */
-    .invitation-canvas {
-      position: relative;
-      width: clamp(280px, min(100vw, 72.5vh), 720px);
-      width: clamp(280px, min(100vw, calc(100dvh * 1160 / 1600)), 720px);
-      aspect-ratio: 1160 / 1600;
-      user-select: none;
-      z-index: 2;
-      flex-shrink: 0;
-    }
-
-    /* Bordes florales que se repiten horizontalmente en toda la pantalla (100vw) */
+    /* Bordes florales que tocan los extremos reales de la pantalla en móvil */
     .floral-border-top,
     .floral-border-bottom {
       position: absolute;
-      left: 50%;
+      left: 0;
       width: 100vw;
       background-image: url('img/borde-flores.png');
       background-repeat: repeat-x;
@@ -97,284 +86,62 @@
     }
 
     .floral-border-top {
-      top: -5%;
-      height: 13.5%;
-      transform: translateX(-50%) rotate(180deg);
+      top: 0;
+      height: clamp(60px, 8vh, 85px);
+      transform: rotate(180deg);
     }
 
     .floral-border-bottom {
       bottom: 0;
-      height: 13.8%;
-      transform: translateX(-50%);
+      height: clamp(75px, 11vh, 110px);
     }
 
-    .obj {
-      position: absolute;
-      display: block;
-      height: auto;
-      pointer-events: none;
-    }
-
-    /* ================= IMÁGENES EN CUADRÍCULA UNIFICADA 1160x1600 ================= */
-
-    /* Tigger (x=220..385 de 1160) */
-    .tigger {
-      left: 18.97%;
-      top: 17.31%;
-      width: 14.22%;
-      z-index: 3;
-    }
-
-    /* Mariposas rosa fuerte (mariposa-rosa-fuerte.png) */
-    .butterfly-top-left {
-      left: 8.19%;
-      top: 15.19%;
-      width: 6.47%;
-      transform: rotate(18deg);
-      z-index: 3;
-    }
-    /* Unida directamente al borde izquierdo del corazón (x=495..540 sobre corazón x=512..648) */
-    .butterfly-heart {
-      left: 42.67%;
-      top: 49.88%;
-      width: 3.88%;
-      transform: rotate(8deg);
-      z-index: 4;
-    }
-    .butterfly-bottom-left {
-      left: 4.5%;
-      top: 77.31%;
-      width: 5.1%;
-      transform: rotate(5deg);
-      z-index: 3;
-    }
-    .butterfly-bottom-right {
-      left: 75.5%;
-      top: 81.56%;
-      width: 6.5%;
-      transform: rotate(10deg);
-      z-index: 3;
-    }
-
-    /* Mariposas rosa pálido (mariposa-rosa-claro.png) */
-    .pale-butterfly-right {
-      left: 83.5%;
-      top: 25.69%;
-      width: 6.4%;
-      transform: rotate(12deg);
-      z-index: 3;
-    }
-    /* Unida al ramo derecho junto a "CANTU" (x=890..978) */
-    .pale-butterfly-bouquet {
-      left: 76.72%;
-      top: 40.31%;
-      width: 7.59%;
-      transform: rotate(-4deg);
-      z-index: 4;
-    }
-
-    /* Abejitas principales (abeja.png) */
-    .bee-1 {
-      left: 78.5%;
-      top: 15.88%;
-      width: 3.95%;
-      transform: rotate(-35deg);
-      z-index: 3;
-    }
-    .bee-2 {
-      left: 79.5%;
-      top: 21.19%;
-      width: 4.55%;
-      z-index: 3;
-    }
-    .bee-3 {
-      left: 86.5%;
-      top: 21%;
-      width: 4.05%;
-      transform: rotate(-18deg);
-      z-index: 3;
-    }
-    .bee-4 {
-      left: 75.5%;
-      top: 24.19%;
-      width: 3.88%;
-      transform: rotate(-32deg);
-      z-index: 3;
-    }
-    .bee-5 {
-      left: 80.5%;
-      top: 32.19%;
-      width: 3.88%;
-      transform: rotate(-18deg);
-      z-index: 3;
-    }
-    .bee-6 {
-      left: 83.5%;
-      top: 61%;
-      width: 4.05%;
-      z-index: 3;
-    }
-
-    /* Flores de 5 pétalos (flor-rosa.png) */
-    /* Unida al final de "dulce" (x=822..876) */
-    .flower-1 {
-      left: 70.86%;
-      top: 10.94%;
-      width: 4.66%;
-      z-index: 3;
-    }
-    .flower-2 {
-      left: 82.2%;
-      top: 16.06%;
-      width: 4.66%;
-      z-index: 3;
-    }
-    /* Arriba del ramo izquierdo (x=198..250) */
-    .flower-3 {
-      left: 17.07%;
-      top: 36.81%;
-      width: 4.4%;
-      z-index: 3;
-    }
-    /* Debajo de "MIA" y junto a Pooh con vestido (x=235..283) */
-    .flower-4 {
-      left: 20.26%;
-      top: 50%;
-      width: 4.18%;
-      z-index: 3;
-    }
-    /* Unida debajo a la derecha del corazón (x=638..696) */
-    .flower-5 {
-      left: 55%;
-      top: 56.38%;
-      width: 5%;
-      z-index: 3;
-    }
-    /* En la oreja de Igor */
-    .flower-6 {
-      left: 10%;
-      top: 83.44%;
-      width: 5.15%;
-      z-index: 4;
-    }
-    /* Detrás de Piglet */
-    .flower-7 {
-      left: 33.2%;
-      top: 83.5%;
-      width: 6.6%;
-      z-index: 2;
-    }
-    /* Arriba de Pooh con corona */
-    .flower-8 {
-      left: 79.8%;
-      top: 78.88%;
-      width: 8.15%;
+    /* Contenedor responsivo centrado que ocupa todo el alto vertical en móvil */
+    .invitation-container {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      height: 100%;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
       z-index: 2;
     }
 
-    /* Ramos florales laterales unidos al nombre de MIA VALENTINA VALDEZ CANTU (x=260..900) */
-    .bouquet-left {
-      left: 11.2%;
-      top: 38.44%;
-      width: 11.6%;
-      transform: rotate(202deg);
-      z-index: 2;
-    }
-    .bouquet-right {
-      left: 77.15%;
-      top: 38.31%;
-      width: 12.3%;
-      transform: rotate(-5deg);
-      z-index: 2;
+    /* SECCIÓN 1: HEADER (Flores superiores, Título, Tigger) */
+    .sec-header {
+      position: relative;
+      width: 100%;
+      height: clamp(170px, 24vh, 220px);
+      flex-shrink: 0;
     }
 
-    /* Pooh con vestido rosa unido al ramo izquierdo y a "MIA" (x=72..232) */
-    .pooh-dress {
-      left: 6.2%;
-      top: 50%;
-      width: 16.9%;
-      z-index: 3;
+    /* SECCIÓN 2: MIDDLE (Detalles, Mia Valentina, Ramos, Pooh vestido, Dirección) */
+    .sec-middle {
+      position: relative;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 380px;
+      max-height: 520px;
     }
 
-    /* Corazón huella centrado (x=512..648 de 1160) */
-    .heart {
-      left: 44.14%;
-      top: 50.13%;
-      width: 11.72%;
-      z-index: 3;
+    /* SECCIÓN 3: FOOTER (Te esperamos, Igor, Piglet, Pooh corona, Flores inferiores) */
+    .sec-footer {
+      position: relative;
+      width: 100%;
+      height: clamp(165px, 23vh, 210px);
+      flex-shrink: 0;
     }
 
-    /* Personajes inferiores */
-    .eeyore {
-      left: 6.5%;
-      top: 80.31%;
-      width: 16.8%;
-      z-index: 3;
-    }
-    .piglet-pooh {
-      left: 35.2%;
-      top: 84.06%;
-      width: 15.5%;
-      z-index: 3;
-    }
-    .pooh-crown {
-      left: 81.8%;
-      top: 82.19%;
-      width: 9.9%;
-      z-index: 3;
-    }
-
-    /* Abejas, mariposas y flores adicionales sutiles en los bordes exteriores */
-    .extra-bee-left-top {
-      left: 2.2%;
-      top: 28%;
-      width: 3.8%;
-      transform: scaleX(-1) rotate(-22deg);
-      z-index: 3;
-    }
-    .extra-flower-left-top {
-      left: 4.8%;
-      top: 32%;
-      width: 4.2%;
-      z-index: 2;
-    }
-    .extra-butterfly-left-low {
-      left: 1.8%;
-      top: 67%;
-      width: 5.5%;
-      transform: scaleX(-1) rotate(12deg);
-      z-index: 2;
-    }
-    .extra-bee-right-top {
-      left: 91.5%;
-      top: 16.5%;
-      width: 3.8%;
-      transform: rotate(-15deg);
-      z-index: 3;
-    }
-    .extra-butterfly-right-mid {
-      left: 91.5%;
-      top: 53%;
-      width: 5.6%;
-      transform: rotate(15deg);
-      z-index: 2;
-    }
-    .extra-bee-right-low {
-      left: 91%;
-      top: 70%;
-      width: 3.8%;
-      transform: rotate(-25deg);
-      z-index: 3;
-    }
-
-    /* ================= CAPA DE TEXTO SVG (1160x1600) ================= */
-    .invitation-text-svg {
-      position: absolute;
-      inset: 0;
+    .sec-svg {
       width: 100%;
       height: 100%;
-      z-index: 5;
-      pointer-events: none;
+      display: block;
       overflow: visible;
     }
 
@@ -382,33 +149,40 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-weight: 500;
     }
-
     .svg-serif-semibold {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-weight: 600;
     }
-
     .svg-serif-italic {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
       font-weight: 500;
     }
-
     .svg-serif-bold {
       font-family: 'Playfair Display', Georgia, serif;
       font-weight: 800;
     }
-
     .svg-handwritten {
       font-family: 'Amatic SC', cursive, sans-serif;
       font-weight: 700;
+    }
+
+    @media (min-width: 601px) {
+      .invitation-container {
+        max-width: 540px;
+        min-height: min(100dvh, 880px);
+      }
     }
   </style>
 </head>
 <body>
   <div class="page-wrapper">
-    <main class="invitation-canvas" aria-label="Invitación al Baby Shower de Mia Valentina Valdez Cantú">
-      <!-- Contenido semántico estructurado para lectores de pantalla (WCAG 2.1 AA) -->
+    <!-- Bordes florales a lo largo de toda la pantalla -->
+    <div class="floral-border-top" aria-hidden="true"></div>
+    <div class="floral-border-bottom" aria-hidden="true"></div>
+
+    <main class="invitation-container" aria-label="Invitación al Baby Shower de Mia Valentina Valdez Cantú">
+      <!-- Accesibilidad para lectores de pantalla -->
       <article class="sr-only">
         <h1>El Amor más dulce está en camino</h1>
         <p>Fecha y horario: <time datetime="2027-01-09T15:00">Sábado 9 de Enero, de 3:00 a 6:00 pm</time></p>
@@ -420,98 +194,101 @@
         <p>Te esperamos</p>
       </article>
 
-      <!-- Bordes de flores con repetición horizontal en toda la pantalla (100vw) -->
-      <div class="floral-border-top" aria-hidden="true"></div>
-      <div class="floral-border-bottom" aria-hidden="true"></div>
+      <!-- SECCIÓN 1: ENCABEZADO -->
+      <header class="sec-header">
+        <svg class="sec-svg" viewBox="0 0 900 420" preserveAspectRatio="xMidYMid meet">
+          <!-- Mariposa arriba izquierda -->
+          <image href="img/mariposa-rosa-fuerte.png" x="50" y="210" width="75" height="120" transform="rotate(18 85 270)" />
+          <!-- Tigger -->
+          <image href="img/tigger.png" x="155" y="235" width="165" height="152" />
+          <!-- Flor junto a dulce -->
+          <image href="img/flor-rosa.png" x="695" y="180" width="55" height="52" />
+          <!-- Texto: El Amor mas dulce -->
+          <text x="168" y="200" class="svg-serif-regular" font-size="82" fill="#A67E65">El</text>
+          <text x="252" y="203" class="svg-serif-bold" font-size="56" fill="#F29AB8" textLength="438" lengthAdjust="spacingAndGlyphs">Amor mas dulce</text>
+          <!-- Texto: Esta en camino -->
+          <text x="366" y="270" class="svg-serif-regular" font-size="57" fill="#B1957C" textLength="344" lengthAdjust="spacingAndGlyphs">Esta en camino</text>
+          <!-- Abejitas y mariposas derecha -->
+          <image href="img/abeja.png" x="734" y="245" width="45" height="40" transform="rotate(-35 756 265)" />
+          <image href="img/flor-rosa.png" x="765" y="250" width="54" height="51" />
+          <image href="img/abeja.png" x="728" y="310" width="52" height="46" />
+          <image href="img/abeja.png" x="796" y="308" width="46" height="40" transform="rotate(-18 819 328)" />
+          <image href="img/abeja.png" x="690" y="350" width="44" height="39" transform="rotate(-32 712 370)" />
+          <image href="img/mariposa-rosa-claro.png" x="760" y="355" width="73" height="88" transform="rotate(12 796 399)" />
+        </svg>
+      </header>
 
-      <!-- Capa de texto vectorial en la misma cuadrícula 1160x1600 del contenedor -->
-      <svg class="invitation-text-svg" viewBox="0 0 1160 1600" aria-hidden="true">
-        <!-- "El Amor mas dulce" (x=245..825, unido a flower-1 en x=822) -->
-        <text x="245" y="242" class="svg-serif-regular" font-size="84" fill="#A67E65">El</text>
-        <text x="335" y="245" class="svg-serif-bold" font-size="58" fill="#F29AB8" textLength="490" lengthAdjust="spacingAndGlyphs">Amor mas dulce</text>
+      <!-- SECCIÓN 2: CUERPO DE LA INVITACIÓN -->
+      <section class="sec-middle">
+        <svg class="sec-svg" viewBox="0 0 900 780" preserveAspectRatio="xMidYMid meet">
+          <!-- Fecha y horario -->
+          <text x="450" y="45" text-anchor="middle" class="svg-serif-regular" font-size="34" fill="#AE957F" letter-spacing="0.6" textLength="550" lengthAdjust="spacingAndGlyphs">Sabado | 9 de Enero | 3:00 a 6:00 pm</text>
 
-        <!-- "Esta en camino" -->
-        <text x="460" y="313" class="svg-serif-regular" font-size="58" fill="#B1957C" textLength="380" lengthAdjust="spacingAndGlyphs">Esta en camino</text>
+          <!-- TE INVITO A CELEBRAR EL -->
+          <text x="450" y="115" text-anchor="middle" class="svg-serif-regular" font-size="31" fill="#AE957F" letter-spacing="1.2" textLength="420" lengthAdjust="spacingAndGlyphs">TE INVITO A CELEBRAR EL</text>
 
-        <!-- Fecha y horario con espacios estilizados alrededor de las barras -->
-        <text x="580" y="508" text-anchor="middle" class="svg-serif-regular" font-size="43" fill="#AE957F" letter-spacing="0.8" textLength="690" lengthAdjust="spacingAndGlyphs">Sabado | 9 de Enero | 3:00 a 6:00 pm</text>
+          <!-- BABY SHOWER -->
+          <text x="455" y="165" text-anchor="middle" class="svg-serif-bold" font-size="38" fill="#AE876C" textLength="284" lengthAdjust="spacingAndGlyphs">BABY SHOWER</text>
 
-        <!-- "TE INVITO A CELEBRAR EL" -->
-        <text x="580" y="594" text-anchor="middle" class="svg-serif-regular" font-size="34" fill="#AE957F" letter-spacing="1.2" textLength="470" lengthAdjust="spacingAndGlyphs">TE INVITO A CELEBRAR EL</text>
+          <!-- DE -->
+          <text x="450" y="208" text-anchor="middle" class="svg-serif-bold" font-size="32" fill="#AE876C">DE</text>
 
-        <!-- "BABY SHOWER" -->
-        <text x="590" y="650" text-anchor="middle" class="svg-serif-bold" font-size="41" fill="#AE876C" textLength="305" lengthAdjust="spacingAndGlyphs">BABY SHOWER</text>
+          <!-- Ramos laterales -->
+          <image href="img/flor-rosa.png" x="157" y="195" width="50" height="48" />
+          <image href="img/ramo-flores.png" x="65" y="215" width="145" height="254" transform="rotate(202 137 342)" />
+          <image href="img/ramo-flores.png" x="695" y="215" width="155" height="270" transform="rotate(-5 772 350)" />
+          <image href="img/mariposa-rosa-claro.png" x="712" y="240" width="86" height="105" transform="rotate(-4 755 292)" />
 
-        <!-- "DE" -->
-        <text x="580" y="697" text-anchor="middle" class="svg-serif-bold" font-size="35" fill="#AE876C">DE</text>
+          <!-- MIA VALENTINA VALDEZ CANTU -->
+          <text x="450" y="280" text-anchor="middle" class="svg-handwritten" font-size="66" fill="#EEA3BC" letter-spacing="1.5" textLength="550" lengthAdjust="spacingAndGlyphs">MIA VALENTINA VALDEZ CANTU</text>
 
-        <!-- "MIA VALENTINA VALDEZ CANTU" más grande (font-size 74, x=260..900),
-             unido directamente al ramo izquierdo (x=130..265) y al ramo derecho (x=890..1035) -->
-        <text x="580" y="778" text-anchor="middle" class="svg-handwritten" font-size="74" fill="#EEA3BC" letter-spacing="1.5" textLength="640" lengthAdjust="spacingAndGlyphs">MIA VALENTINA VALDEZ CANTU</text>
+          <!-- Pooh con vestido rosa -->
+          <image href="img/pooh-vestido.png" x="25" y="325" width="195" height="275" />
+          <image href="img/flor-rosa.png" x="171" y="325" width="48" height="46" />
 
-        <!-- "LOS PADRES SON: / Karen Cantu & Aldo Valdez" -->
-        <text x="580" y="994" text-anchor="middle" class="svg-serif-bold" font-size="23" fill="#EDA7BE" textLength="215" lengthAdjust="spacingAndGlyphs">LOS PADRES SON:</text>
-        <text x="580" y="1020" text-anchor="middle" class="svg-serif-bold" font-size="24" fill="#EDA7BE" textLength="345" lengthAdjust="spacingAndGlyphs">Karen Cantu &amp; Aldo Valdez</text>
+          <!-- Corazón huella con mariposa y flor -->
+          <image href="img/corazon-huella.png" x="388" y="325" width="126" height="116" />
+          <image href="img/mariposa-rosa-fuerte.png" x="365" y="325" width="44" height="71" transform="rotate(8 387 360)" />
+          <image href="img/flor-rosa.png" x="506" y="420" width="58" height="55" />
+          <image href="img/abeja.png" x="769" y="480" width="46" height="41" />
 
-        <!-- Bloque de Dirección estilizado y alineado con jerarquía editorial -->
-        <line x1="425" y1="1074" x2="505" y2="1074" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
-        <text x="580" y="1082" text-anchor="middle" class="svg-serif-semibold" font-size="25" fill="#B49D88" letter-spacing="3">DIRECCIÓN</text>
-        <line x1="655" y1="1074" x2="735" y2="1074" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
+          <!-- LOS PADRES SON -->
+          <text x="450" y="480" text-anchor="middle" class="svg-serif-bold" font-size="22" fill="#EDA7BE" textLength="202" lengthAdjust="spacingAndGlyphs">LOS PADRES SON:</text>
+          <text x="450" y="504" text-anchor="middle" class="svg-serif-bold" font-size="23" fill="#EDA7BE" textLength="322" lengthAdjust="spacingAndGlyphs">Karen Cantu &amp; Aldo Valdez</text>
 
-        <text x="580" y="1116" text-anchor="middle" class="svg-serif-bold" font-size="27" fill="#AE876C" letter-spacing="1.2">PRINCESS PINK EVENTOS</text>
-        <text x="580" y="1146" text-anchor="middle" class="svg-serif-semibold" font-size="26" fill="#A68B74">Plaza Antalya · Local 201, Segundo piso</text>
-        <text x="580" y="1174" text-anchor="middle" class="svg-serif-regular" font-size="25" fill="#AE957F">Miguel Alemán #6063, casi esq. Las Américas</text>
-        <text x="580" y="1202" text-anchor="middle" class="svg-serif-italic" font-size="25" fill="#AE957F">Col. América - Linda Vista, Guadalupe, N.L.</text>
+          <!-- DIRECCIÓN -->
+          <line x1="330" y1="550" x2="395" y2="550" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
+          <text x="450" y="557" text-anchor="middle" class="svg-serif-semibold" font-size="23" fill="#B49D88" letter-spacing="3">DIRECCIÓN</text>
+          <line x1="505" y1="550" x2="570" y2="550" stroke="#E5C5D0" stroke-width="1.5" stroke-linecap="round" />
 
-        <!-- "Te esperamos" -->
-        <text x="580" y="1276" text-anchor="middle" class="svg-serif-bold" font-size="39" fill="#F293B1" textLength="265" lengthAdjust="spacingAndGlyphs">Te esperamos</text>
-      </svg>
+          <text x="450" y="588" text-anchor="middle" class="svg-serif-bold" font-size="25" fill="#AE876C" letter-spacing="1.2">PRINCESS PINK EVENTOS</text>
+          <text x="450" y="616" text-anchor="middle" class="svg-serif-semibold" font-size="24" fill="#A68B74">Plaza Antalya · Local 201, Segundo piso</text>
+          <text x="450" y="642" text-anchor="middle" class="svg-serif-regular" font-size="23" fill="#AE957F">Miguel Alemán #6063, casi esq. Las Américas</text>
+          <text x="450" y="668" text-anchor="middle" class="svg-serif-italic" font-size="23" fill="#AE957F">Col. América - Linda Vista, Guadalupe, N.L.</text>
+        </svg>
+      </section>
 
-      <!-- Parte superior: Tigger, mariposas, abejas y flores -->
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-1">
-      <img src="img/mariposa-rosa-fuerte.png" alt="" aria-hidden="true" class="obj butterfly-top-left">
-      <img src="img/tigger.png" alt="" aria-hidden="true" class="obj tigger">
+      <!-- SECCIÓN 3: PIE DE PÁGINA (Te esperamos, personajes en el jardín) -->
+      <footer class="sec-footer">
+        <svg class="sec-svg" viewBox="0 0 900 370" preserveAspectRatio="xMidYMid meet">
+          <!-- Te esperamos -->
+          <text x="450" y="45" text-anchor="middle" class="svg-serif-bold" font-size="39" fill="#F293B1" textLength="265" lengthAdjust="spacingAndGlyphs">Te esperamos</text>
 
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj bee-1">
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-2">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj bee-2">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj bee-3">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj bee-4">
-      <img src="img/mariposa-rosa-claro.png" alt="" aria-hidden="true" class="obj pale-butterfly-right">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj bee-5">
+          <!-- Igor (eeyore) -->
+          <image href="img/mariposa-rosa-fuerte.png" x="33" y="50" width="58" height="94" transform="rotate(5 62 97)" />
+          <image href="img/igor.png" x="50" y="95" width="194" height="194" />
+          <image href="img/flor-rosa.png" x="90" y="145" width="59" height="56" />
 
-      <!-- Parte central: Ramos unidos al nombre de Mia, Pooh con vestido, corazón unido a su mariposa -->
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-3">
-      <img src="img/ramo-flores.png" alt="" aria-hidden="true" class="obj bouquet-left">
-      <img src="img/ramo-flores.png" alt="" aria-hidden="true" class="obj bouquet-right">
-      <img src="img/mariposa-rosa-claro.png" alt="" aria-hidden="true" class="obj pale-butterfly-bouquet">
+          <!-- Piglet y Pooh -->
+          <image href="img/flor-rosa.png" x="273" y="145" width="76" height="73" />
+          <image href="img/piglet-y-pooh.png" x="295" y="155" width="179" height="173" />
 
-      <img src="img/pooh-vestido.png" alt="" aria-hidden="true" class="obj pooh-dress">
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-4">
-      <img src="img/mariposa-rosa-fuerte.png" alt="" aria-hidden="true" class="obj butterfly-heart">
-      <img src="img/corazon-huella.png" alt="" aria-hidden="true" class="obj heart">
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-5">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj bee-6">
-
-      <!-- Parte inferior: Personajes, mariposas y flores -->
-      <img src="img/mariposa-rosa-fuerte.png" alt="" aria-hidden="true" class="obj butterfly-bottom-left">
-      <img src="img/igor.png" alt="" aria-hidden="true" class="obj eeyore">
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-6">
-
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-7">
-      <img src="img/piglet-y-pooh.png" alt="" aria-hidden="true" class="obj piglet-pooh">
-
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj flower-8">
-      <img src="img/mariposa-rosa-fuerte.png" alt="" aria-hidden="true" class="obj butterfly-bottom-right">
-      <img src="img/pooh-corona.png" alt="" aria-hidden="true" class="obj pooh-crown">
-
-      <!-- Abejas, mariposas y flores adicionales sutiles en los costados -->
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj extra-bee-left-top">
-      <img src="img/flor-rosa.png" alt="" aria-hidden="true" class="obj extra-flower-left-top">
-      <img src="img/mariposa-rosa-claro.png" alt="" aria-hidden="true" class="obj extra-butterfly-left-low">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj extra-bee-right-top">
-      <img src="img/mariposa-rosa-claro.png" alt="" aria-hidden="true" class="obj extra-butterfly-right-mid">
-      <img src="img/abeja.png" alt="" aria-hidden="true" class="obj extra-bee-right-low">
+          <!-- Pooh corona -->
+          <image href="img/flor-rosa.png" x="735" y="70" width="94" height="90" />
+          <image href="img/mariposa-rosa-fuerte.png" x="690" y="115" width="74" height="120" transform="rotate(10 727 175)" />
+          <image href="img/pooh-corona.png" x="745" y="125" width="114" height="180" />
+        </svg>
+      </footer>
     </main>
   </div>
 </body>
